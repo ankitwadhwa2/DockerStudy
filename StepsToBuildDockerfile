@@ -31,3 +31,46 @@ docker image push ankitwadhwa/web1:latest
 docker image rm -f 3838 
 
 https://github.com/ankitwadhwa2/Docker.git
+
+--------------------------------------------------------------------------------------------------------------------------
+
+docker container :
+---------------------
+#To run aapplication 
+
+docker container run -it -p 5000:5000 -e FLASK_APP=app.py web1
+# Local port can be changed and should be added in security group of EC2
+
+Flags used in above command
+
+-it -> to run command in interactive mode
+-p - port -> expected two ports . container for docker host and another one is for docker container which we mention in flask command 
+-e - environment variable  - Flask web framework expect to pass variable FLASK_APP  (it is not related to docker) 
+      and multiple -e flags can be passed
+	  
+
+----------------------
+
+#To remove contaner after stop , we can either stop it first and remove or use flag in run command
+
+1. docker container rm < names>	  
+
+2. docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py web1
+
+Flags used in above command
+
+--rm
+--name <image name>
+
+# Run container in background
+
+docker container run -it --rm --name web1 -p 5000:5000 -e FLASK_APP=app.py -d web1
+
+-d flag is used to run it in background
+
+--------------------
+# Containers can be restarted if it fails unexpectedly using flags as mentioned.
+
+--restart on-failure
+
+docker container run -it --name web4 -p 8090:5000 -e FLASK_APP=app.py -d --restart on-failure  web1
