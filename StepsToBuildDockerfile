@@ -1,0 +1,33 @@
+sudo yum install docker -y
+sudo usermod -a -G docker ec2-user
+sudo service docker start
+
+# To build docker image
+docker image build -t web1 .
+
+#To inspect layers and latest tag
+docker image inspect web1
+
+# Remove tag  of any file
+docker image rm web1:1.0
+
+# Push docker file on docker hub:
+
+# Give credentials while logging first time and it will create token in config.json to login later on.
+
+docker login
+<username>
+<password>
+
+/home/ec2-user/.docker/config.json.
+
+# before pushing , we have to tag image to user 
+docker image tag web1 ankitwadhwa/web1:latest
+
+# Push docker file on hub
+docker image push ankitwadhwa/web1:latest
+
+#Remove image on local, using image id
+docker image rm -f 3838 
+
+https://github.com/ankitwadhwa2/Docker.git
