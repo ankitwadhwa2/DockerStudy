@@ -1,0 +1,69 @@
+# Mount volume to the container , so no need to rebuild the image
+docker container run  -it -p 5000:5000 -e FLASK_APP=app.py --name webapp3  -v "$PWD:/app" -e FLASK_DEBUG=1 slimwebapp
+
+Flag :
+-v --> to mount the volume from local , to implement the changes ,the container should be restarted.
+
+## Move in running container
+docker container exec -it webapp3 sh
+
+exec --> to run commands in containers
+
+sh --> it will run a bach terminal in container webapp3
+
+------------------------------
+
+#  Create files with our own user in container
+docker container exec -it --user "$(id -u ec2-user):$(id -g ec2-user)" slimapp1 touch bye.txt
+
+--------------
+Docker Network
+
+docker network ls
+docker network inspect mynet
+
+docker container run -itd -p 6379:6379 --rm --name redis redis:3.2-alpine
+
+Flag :  -d --->  to run command in background
+
+docker container run -it -p 5000:5000 --rm --name web2 -e FLASK_APP=app.py -e FLASK_DEBUG=1 webapp
+
+Change  local IP innstead of redis in app.py because we are running redis on container not on local.
+
+###REDIS COMMAND
+## REdis is in memory datastore
+KEYS * - to check the keys 
+INCRBY <key name> <value>
+
+----------------
+Create our own network and run containers in it.
+
+docker network create --driver bridge mynet
+
+Start containers with flag --net mynet(network bridge name)
+
+Benefit of creating our own network is it creates DNS as container name.
+
+docker exec web2 ping redis (this command will work)
+-----------------
+----------------------------
+###DOCKER VOLUMES###
+
+Volumes can be shared within containers which are running on same host
+
+docker volume create web2_redis
+docker volume ls
+docker volume inspect web2_redis
+
+docker container run -itd -p 6379:6379  --name redis --net mynet -v web2_redis:/data redis:3.2-alpine
+
+FLAG used : -v web2_redis:/data
+
+##Another way too create volume:
+
+Add instrustor VOLUME in dockerfile and multiple volumes can be added, each in new line
+
+example: VOLUME ["/app/ankit/public"]
+
+# TO mount the volume on another container, use flag --volumes-from <container name> while starting it
+docker container run -itd -p 6379:6379  --name redis --net mynet -v web2_redis:/data --volumes-from web2 redis:3.2-alpine
