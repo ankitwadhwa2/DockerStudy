@@ -2,6 +2,15 @@ sudo yum install docker -y
 sudo usermod -a -G docker ec2-user
 sudo service docker start
 
+##Docker system commands
+docker system prune
+
+-f
+-a
+docker system info
+docker system df
+docker system df -v
+------------------------------------
 # To build docker image
 docker image build -t web1 .
 
@@ -48,6 +57,7 @@ Flags used in above command
 -e - environment variable  - Flask web framework expect to pass variable FLASK_APP  (it is not related to docker) 
       and multiple -e flags can be passed
 	  
+-e --> it can be used to append the value  of variable predefined .
 
 ----------------------
 
