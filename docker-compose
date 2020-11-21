@@ -1,0 +1,51 @@
+#Install docker-compose
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+#When we execute docker-compose command it will create a new network and all the containers will part of same network
+
+#Docker-compse.yml 
+
+version: '3'
+services:
+    redis-server:
+            image: redis
+    node-appp:
+            build: .
+            ports:
+              -  "8080:8081"
+
+
+#in source code, we can user redis-server as host and port 6379 , docker -compose consider it as hostname 
+#for example : const client = redis.createClient({host: 'redis-server', port: 6379 });
+
+
+
+docker system prune
+
+-f
+-a
+docker system info
+docker system df
+docker system df -v
+
+-----------
+docker-compose build
+docker-compose pull
+docker-compose up <service name optional>
+
+docker-compose up --build
+
+docker-compose restart <service name optional>
+docker-compose stop <service name optional>
+
+docker-compose start <service name optional>  --> it does not check dependency and will only start stopped container
+
+docker-compose up <service name optional> --> this will check the dependencies and can create new container as well
+
+docker-compose rm <service name optional>
+
+Docker file CMD can be overwritten by using WORKER in docker-compose.yml
