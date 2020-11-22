@@ -49,7 +49,11 @@ docker container :
 
 docker container run -it -p 5000:5000 -e FLASK_APP=app.py web1
 # Local port can be changed and should be added in security group of EC2
-
+----------------------
+## Command canbe used directly on image this way , no ned to start the container
+docker run ankitwadhwa/devnpmimage ls -lrt
+docker run -it ankitwadhwa/devnpmimage ls -lrt
+-------------------
 Flags used in above command
 
 -it -> to run command in interactive mode
