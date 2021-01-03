@@ -1,0 +1,23 @@
+sudo yum install docker -y
+sudo usermod -a -G docker ec2-user
+sudo service docker start
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+
+# To check version
+
+node -e "console.log('Running Node.js ' + process.version)"
+
+npm install -g create-react-app
+create-react-app frontend
+
+npm run test
+npm run build
+npm run start
